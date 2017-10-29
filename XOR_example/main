@@ -1,5 +1,6 @@
 import numpy as np
 import tensorflow as tf
+import matplotlib.pyplot as plt
 
 #=================================================
 X = np.array([
@@ -19,7 +20,7 @@ def layer_sizes(X,Y):
     n_x = X.shape[0]
     n_y = Y.shape[0]
 
-    return (n_x, 2, n_y)
+    return (n_x, 10, n_y)
 
 #=================================================
 # Sigmoid Function
@@ -190,7 +191,7 @@ def update_parameters(parameters, grads, learning_rate):
 #=================================================
 def L_layer_model(X, Y, layers_dims, learning_rate = 0.0075, num_iterations = 3000, print_cost=False):
     costs = []
-
+    epoch = 0
     parameters = initialize_parameter_deep(layers_dims)
 
     for i in range(0, num_iterations):
@@ -205,11 +206,16 @@ def L_layer_model(X, Y, layers_dims, learning_rate = 0.0075, num_iterations = 30
         if print_cost and i % 100 == 0:
             costs.append(cost)
 
+        epoch = epoch + 1
+
     AL, _ = forward_prop(X, parameters)
     print("result(AL) = " + str(AL))
     print("\nresult = " + str(AL >= 0.5))
+    #plt.plot(costs)
+    #plt.show()
 
 #=================================================
 # main
 #=================================================
-L_layer_model(X, Y, layer_sizes(X,Y), 0.6, 2000, True)
+for z in range(0, 100):
+    L_layer_model(X, Y, layer_sizes(X,Y), 0.3, 3000, False)
