@@ -115,7 +115,7 @@ def forward_prop(X, parameters):
 #=================================================
 def compute_cost(AL, Y):
     m = AL.shape[1]
-    cost = (-1 / m) * np.sum((Y * np.log(AL) + (1 - Y)) * (np.log(1 - AL)))
+    cost = (-1 / m) * np.sum( (Y * np.log(AL)) + ((1 - Y) * (np.log(1 - AL))) )
     cost = np.squeeze(cost) # [[17]] -> 17
 
     return cost
@@ -211,11 +211,12 @@ def L_layer_model(X, Y, layers_dims, learning_rate = 0.0075, num_iterations = 30
     AL, _ = forward_prop(X, parameters)
     print("result(AL) = " + str(AL))
     print("\nresult = " + str(AL >= 0.5))
-    #plt.plot(costs)
-    #plt.show()
+    plt.plot(costs)
+    plt.show()
 
 #=================================================
 # main
 #=================================================
-for z in range(0, 100):
-    L_layer_model(X, Y, layer_sizes(X,Y), 0.3, 3000, False)
+for l in range(1, 1000):
+    L_layer_model(X, Y, layer_sizes(X,Y), 0.01, 3000, True)
+
